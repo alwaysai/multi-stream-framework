@@ -1,0 +1,2 @@
+﻿# Config files for the application
+config_files: ['classifier_app.yml', 'detector_app.yml']
