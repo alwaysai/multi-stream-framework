@@ -1,5 +1,5 @@
 # multistream_framework
-Use multistream framework to develop multiple applications on individual processes and run them in parallel.
+Use multistream framework to develop multiple applications and run them on individual processes in parallel.
 
 ## Requirements
 * [alwaysAI account](https://alwaysai.co/auth?register=true)
