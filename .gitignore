@@ -1,0 +1,10 @@
+# files and folders to ignore
+alwaysai.project.json
+alwaysai.target.json
+__pycache__
+models
+videos
+app_logs
+venv
+*.pyc
+*.log

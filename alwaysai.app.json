@@ -1,0 +1,9 @@
+{
+  "models": {
+    "alwaysai/yolo_v3": 6,
+    "alwaysai/googlenet": 8
+  },
+  "scripts": {
+    "start": "python app.py"
+  }
+}
