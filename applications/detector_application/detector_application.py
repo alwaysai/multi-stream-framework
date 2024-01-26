@@ -49,7 +49,8 @@ class DetectorApp:
         self._stream_object.stop()
 
     def close(self):
-        empty_queue(self._app_shared.frames_to_web_mp_queues[self._process_idx])
+        empty_queue(self._app_shared.frames_to_web_mp_queues[
+            self._process_idx])
 
     def run(self):
         self._gen_stream_object()

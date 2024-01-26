@@ -33,7 +33,6 @@ class DashboardApp(multiprocessing.Process):
                 streamer.send_data(final_image, "")
 
                 if streamer.check_exit():
-                    self._app_shared.process_exit.set()
                     break
 
     def run(self):
@@ -43,7 +42,7 @@ class DashboardApp(multiprocessing.Process):
             print("exception occured :", e)
             pass
         finally:
-            print("dashboard exited")
+            self._app_shared.process_exit.set()
 
     def close(self):
         pass

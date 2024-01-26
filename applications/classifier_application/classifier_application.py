@@ -25,7 +25,8 @@ class ClassifierApp:
         self._classifier_model = self._app_config.classifier_model
 
     def close(self):
-        empty_queue(self._app_shared.frames_to_web_mp_queues[self._process_idx])
+        empty_queue(self._app_shared.frames_to_web_mp_queues[
+            self._process_idx])
 
     def run(self):
         self._classifier = edgeiq.Classification(self._classifier_model)

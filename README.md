@@ -1,5 +1,5 @@
 # multistream_framework
-Use multistream framework to develop multiple applications on individual processes.
+Use multistream framework to develop multiple applications on individual processes and run them in parallel.
 
 ## Requirements
 * [alwaysAI account](https://alwaysai.co/auth?register=true)
@@ -25,7 +25,7 @@ aai app start
 
 ## Notes
 * Configuration files used for the application can be found under the config directory
-* Configuration can be customed handled at the application level. Examples of that can be  found in the applications directory.
+* Configuration can be customed handled at the application level. Examples of that can be  found in the `config.py` scripts for each application in the applications directory.
 * `app_shared.py` script contains shared resources that would be shared between applications.
 
 To change the computer vision model, the engine and accelerator, and add additional dependencies read [this guide](https://alwaysai.co/docs/application_development/configuration_and_packaging.html).
