@@ -5,7 +5,7 @@ from app_shared import AppShared
 from edgeiq._utils import empty_queue
 
 
-class DetectorApp(edgeiq.MultiprocessAppInterface):
+class DetectorApp(edgeiq.MultiStreamAppInterface):
     def __init__(
         self,
         model_id: str,
@@ -18,9 +18,6 @@ class DetectorApp(edgeiq.MultiprocessAppInterface):
         self._frames_to_web_mp_queue = frames_to_web_queue
         self._app_shared = app_shared
 
-    def close(self):
-        empty_queue(self._frames_to_web_mp_queue)
-
     def run(self):
         stream = edgeiq.WebcamVideoStream(self._stream_source).start()
         detector = edgeiq.ObjectDetection(self._model_id)
@@ -28,6 +25,7 @@ class DetectorApp(edgeiq.MultiprocessAppInterface):
 
         # Wait for all processes to initialize
         self._app_shared.process_barrier.wait()
+        print(f'Running DetectorApp for camera {self._stream_source}')
 
         try:
             while True:
@@ -46,4 +44,6 @@ class DetectorApp(edgeiq.MultiprocessAppInterface):
                 self._frames_to_web_mp_queue.put(frame)
 
         finally:
+            print(f'DetectorApp for camera {self._stream_source} stopping...')
             stream.stop()
+            empty_queue(self._frames_to_web_mp_queue)

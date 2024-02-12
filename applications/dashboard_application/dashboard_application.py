@@ -5,13 +5,14 @@ import numpy as np
 from app_shared import AppShared
 
 
-class DashboardApp(edgeiq.MultiprocessAppInterface):
+class DashboardApp(edgeiq.MultiStreamAppInterface):
     def __init__(self, app_shared: AppShared):
         self._app_shared = app_shared
         self._frame_queues = self._app_shared.frames_to_web_mp_queues
 
     def _run(self):
         self._app_shared.process_barrier.wait()
+        print('Running DashboardApp')
 
         with edgeiq.Streamer() as streamer:
             while True:
@@ -34,10 +35,6 @@ class DashboardApp(edgeiq.MultiprocessAppInterface):
     def run(self):
         try:
             self._run()
-        except Exception as e:
-            print("exception occurred :", e)
         finally:
+            print('DashboardApp closing...')
             self._app_shared.process_exit.set()
-
-    def close(self):
-        pass

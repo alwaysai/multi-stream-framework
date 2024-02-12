@@ -1,5 +1,6 @@
 import json
-import multiprocessing
+import logging
+from multiprocessing.synchronize import Event as EventClass
 import os
 from typing import List, Type
 import edgeiq
@@ -9,10 +10,13 @@ import threading
 
 
 class MonitorThread(threading.Thread):
+    """
+    Wait for stop command in background thread and stop multi-stream framework
+    """
     def __init__(
         self,
-        app: edgeiq.MultiprocessFramework,
-        exit_flag: multiprocessing.Event
+        app: edgeiq.MultiStreamFramework,
+        exit_flag: EventClass
     ):
         self._app = app
         self._exit_flag = exit_flag
@@ -24,6 +28,7 @@ class MonitorThread(threading.Thread):
 
 
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO)
     # Load configuration
     cfg_path = 'config.json'
     if not os.path.exists(cfg_path):
@@ -36,7 +41,7 @@ if __name__ == "__main__":
     stream_count = len(cfg['streams'])
     app_shared = AppShared(stream_count)
 
-    apps: List[Type[edgeiq.MultiprocessAppInterface]] = []
+    apps: List[Type[edgeiq.MultiStreamAppInterface]] = []
     args: List[tuple] = []
 
     for i, stream in enumerate(cfg['streams']):
@@ -53,7 +58,7 @@ if __name__ == "__main__":
         app_shared,
     ))
 
-    app = edgeiq.MultiprocessFramework(apps=apps, args=args)
+    app = edgeiq.MultiStreamFramework(apps=apps, args=args)
     monitor_thread = MonitorThread(app, app_shared.process_exit)
 
     # Run application
