@@ -24,7 +24,7 @@ class DashboardApp(edgeiq.MultiStreamAppInterface):
                     frame = cv2.resize(frame, (640, 480))
                 final_image = np.vstack(frames)
 
-                streamer.send_data(final_image, "")
+                streamer.send_data(final_image)
 
                 if streamer.check_exit():
                     break
