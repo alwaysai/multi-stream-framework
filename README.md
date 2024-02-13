@@ -1,5 +1,5 @@
 # Multi-Stream Framework
-The multi-stream framework enables running camera streams using multi-processing.
+This application demonstrates using the multi-stream framework to process multiple camera streams using multi-processing.
 
 ## Requirements
 * [alwaysAI account](https://alwaysai.co/auth?register=true)
