@@ -1,48 +1,40 @@
 import edgeiq
-import multiprocessing
-import queue
-import time
 import cv2
 import numpy as np
 
+from app_shared import AppShared
 
-class DashboardApp(multiprocessing.Process):
-    def __init__(self, args):
-        self._app_shared = args[0]
+
+class DashboardApp(edgeiq.MultiStreamAppInterface):
+    def __init__(self, app_shared: AppShared):
+        self._app_shared = app_shared
         self._frame_queues = self._app_shared.frames_to_web_mp_queues
-        super().__init__()
 
     def _run(self):
         self._app_shared.process_barrier.wait()
+        print('Running DashboardApp')
 
         with edgeiq.Streamer() as streamer:
             while True:
-                while True:
-                    try:
-                        frame1 = self._frame_queues[0].get(block=False)
-                        frame2 = self._frame_queues[1].get(block=False)
-                        break
+                frames = []
+                for frame_queue in self._frame_queues:
+                    frames.append(frame_queue.get())
 
-                    except queue.Empty:
-                        time.sleep(0.01)
+                for frame in frames:
+                    frame = cv2.resize(frame, (640, 480))
+                final_image = np.vstack(frames)
 
-                frame1 = cv2.resize(frame1, (640, 480))
-                frame2 = cv2.resize(frame2, (640, 480))
-                final_image = np.vstack((frame1, frame2))
-
-                streamer.send_data(final_image, "")
+                streamer.send_data(final_image)
 
                 if streamer.check_exit():
+                    break
+
+                if self._app_shared.process_exit.is_set():
                     break
 
     def run(self):
         try:
             self._run()
-        except Exception as e:
-            print("exception occured :", e)
-            pass
         finally:
+            print('DashboardApp closing...')
             self._app_shared.process_exit.set()
-
-    def close(self):
-        pass

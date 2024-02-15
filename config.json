@@ -1,0 +1,12 @@
+{
+  "streams": [
+    {
+      "stream_source": 0,
+      "model_id": "alwaysai/yolo_v3"
+    },
+    {
+      "stream_source": 2,
+      "model_id": "alwaysai/yolo_v4"
+    }
+  ]
+}

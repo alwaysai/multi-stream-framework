@@ -1,5 +1,5 @@
-# Multistream Framework
-Use multistream framework to develop multiple applications and run them on individual processes in parallel.
+# Multi-Stream Framework
+This application demonstrates using the multi-stream framework to process multiple camera streams using multi-processing.
 
 ## Requirements
 * [alwaysAI account](https://alwaysai.co/auth?register=true)
@@ -23,11 +23,29 @@ To start the app:
 aai app start
 ```
 
-## Notes
-* Configuration files used for the application can be found under the `config` directory
-* Configuration can be custom handled at the application level. Examples of that can be found in the `config.py` scripts for each application in the applications directory.
-* `app_shared.py` script contains shared resources that would be shared between applications.
-* The detector application is configured to run with `test.mp4` in the `videos` directory. Please add a sample video in the directory to run or set it to appropriate path in the configuration file.
+This application runs two different models on two camera streams, and can be stopped by pressing the "stop" button on the Streamer.
+
+### Configuration
+
+The configuration for this application is in `config.json`:
+
+```json
+{
+  "streams": [
+    {
+      "stream_source": 0,
+      "model_id": "alwaysai/yolo_v3"
+    },
+    {
+      "stream_source": 2,
+      "model_id": "alwaysai/yolo_v4"
+    }
+  ]
+}
+```
+
+You can modify this config to have as many camera streams and models as your hardware can support. Additionally, you can change `WebcamVideoStream` to `IPVideoStream` or `FileVideoStream` in `DetectorApp` depending on your use case, and then modify the contents of the config file to provide the desired inputs. See the [VideoStream API docs](https://alwaysai.co/docs/edgeiq_api/video_stream.html) for more details.
+
 
 To change the computer vision model, the engine and accelerator, and add additional dependencies read [this guide](https://alwaysai.co/docs/application_development/configuration_and_packaging.html).
 
