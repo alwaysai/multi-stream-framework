@@ -47,7 +47,7 @@ The configuration for this application is in `config.json`:
 You can modify this config to have as many camera streams and models as your hardware can support. Additionally, you can change `WebcamVideoStream` to `IPVideoStream` or `FileVideoStream` in `DetectorApp` depending on your use case, and then modify the contents of the config file to provide the desired inputs. See the [VideoStream API docs](https://alwaysai.co/docs/edgeiq_api/video_stream.html) for more details.
 
 
-To change the computer vision model, the engine and accelerator, and add additional dependencies read [this guide](https://alwaysai.co/docs/application_development/configuration_and_packaging.html).
+To change the computer vision model, the engine and accelerator, and add additional dependencies read [this guide](https://docs.alwaysai.co/application_development/application_configuration.html).
 
 ## Support
 * [Documentation](https://alwaysai.co/docs/)
